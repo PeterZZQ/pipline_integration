@@ -1,12 +1,12 @@
 ## Preprocessing count matrix of scATAC-Seq and scRNA-Seq for integration
 
-#### Description
+### Description
 
 This is the preprocessing pipeline used in `scDART` and `scCFRM`, and these applications show that the pipeline works well in preserving cellular indentity in the datasets while significantly reduce the dimensionality.
 
 
 
-#### Before using
+### Before using
 
 Before using the pipeline, make sure:
 
@@ -28,13 +28,13 @@ Before using the pipeline, make sure:
 
 
 
-#### Usage
+### Usage
 
 Check `preprocessing.ipynb`.
 
 
 
-#### Dependency
+### Dependency
 
 **Python:**
 
@@ -43,11 +43,5 @@ Check `preprocessing.ipynb`.
 
 **R**:  
 
-* [`Seurat` ver 3.2.3](https://satijalab.org/seurat/articles/install.html) (or alternatively `GenomicRanges`, `BiocGenerics`, `rtracklayer`, `GenomeInfoDb`, `Signac`, `GenomicRanges`)
-
-
-
-#### Contact:
-
-* ziqi.zhang@gatech.edu
+* [`Seurat` ver 3.2.3](https://satijalab.org/seurat/articles/install.html) (or alternatively `GenomicRanges`, `BiocGenerics`, `rtracklayer`, `GenomeInfoDb`, `Signac`, `GenomicRanges`
 
