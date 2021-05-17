@@ -65,11 +65,11 @@ row.names(counts.atac) <- read.table(file = paste0(path, "./regions.txt"), sep =
 colnames(counts.atac) <- read.table(file = paste0(path, "./barcodes_atac.txt"), sep = ",", header = FALSE)[[1]]
 
 if(species == "Mouse"){
-    A = find_geneact(peak.matrix = counts.atac, annotation.file = "./reference_genome/Mus_musculus.GRCm38.84.gtf", 
-                           seq.levels = c(1:19, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
+    A = find_geneact(peak.matrix = counts.atac, annotation.file = "/Users/ziqizhang/Dropbox/Research/Paper_Summary/ATAC-seq/pipeline_integration/reference_genome/Mus_musculus.GRCm38.84.gtf", 
+                     seq.levels = c(1:19, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
 } else if(species == "Human"){
-    A = find_geneact(peak.matrix = counts.atac, annotation.file = "./reference_genome/Homo_sapiens.GRCh37.82.gtf", 
-                           seq.levels = c(1:22, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
+    A = find_geneact(peak.matrix = counts.atac, annotation.file = "/Users/ziqizhang/Dropbox/Research/Paper_Summary/ATAC-seq/pipeline_integration/reference_genome/Homo_sapiens.GRCh37.82.gtf", 
+                     seq.levels = c(1:22, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
 } else{
     stop("species can only be Human or Mouse")
 }
