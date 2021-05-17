@@ -58,7 +58,7 @@ downstream <- 0
 path <- "./raw/"
 
 # counts.atac, mm, of the shape regions by barcodes
-counts.atac <- readMM(paste0(path, "./RxC1.mtx"))
+counts.atac <- readMM(paste0(path, "./R.mtx"))
 # regions chrX_start_end
 row.names(counts.atac) <- read.table(file = paste0(path, "./regions.txt"), sep = ",", header = FALSE)[[1]]
 # barcodes
