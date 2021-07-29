@@ -1,13 +1,11 @@
 rm(list = ls())
 gc()
 
-library(Seurat)
 library(Matrix)
 
-find_geneact <- function(peak.matrix, annotation.file, seq.levels, upstream = 2000, downstream = 0, verbose = FALSE){
-    # peak.matrix is the region by cell matrix, peak.df is all regions
-    peak.df <- rownames(x = peak.matrix)
-    
+find_geneact <- function(peak.df, annotation.file, seq.levels, upstream = 2000, downstream = 0, verbose = FALSE){
+    # peak.df is the regions
+    peak = peak.df
     # reformualte peak.df of the form "chromosome", "start", "end"
     peak.df <- do.call(what = rbind, args = strsplit(x = peak.df, split = "_"))
     peak.df <- as.data.frame(x = peak.df)
@@ -39,13 +37,12 @@ find_geneact <- function(peak.matrix, annotation.file, seq.levels, upstream = 20
     gene.ids$gene_name[is.na(gene.ids$gene_name)] <- gene.ids$gene_id[is.na(gene.ids$gene_name)]
     peak.ids$gene.name <- gene.ids$gene_name
     peak.ids <- as.data.frame(x = peak.ids)
-    peak.ids$peak <- rownames(peak.matrix)[S4Vectors::queryHits(x = keep.overlaps)]
+    peak.ids$peak <- peak[S4Vectors::queryHits(x = keep.overlaps)]
     # new annotations should include peaks and corresponding gene.name
     annotations <- peak.ids[, c("peak", "gene.name")]
     
     return(annotations)
 }
-
 
 
 # hyper-parameters
@@ -57,18 +54,14 @@ downstream <- 0
 
 path <- "./raw/"
 
-# counts.atac, mm, of the shape regions by barcodes
-counts.atac <- readMM(paste0(path, "./R.mtx"))
 # regions chrX_start_end
-row.names(counts.atac) <- read.table(file = paste0(path, "./regions.txt"), sep = ",", header = FALSE)[[1]]
-# barcodes
-colnames(counts.atac) <- read.table(file = paste0(path, "./barcodes_atac.txt"), sep = ",", header = FALSE)[[1]]
+regions <- read.table(file = paste0(path, "regions.txt"), sep = ",", header = FALSE)[[1]]
 
 if(species == "Mouse"){
-    A = find_geneact(peak.matrix = counts.atac, annotation.file = "/Users/ziqizhang/Dropbox/Research/Paper_Summary/ATAC-seq/pipeline_integration/reference_genome/Mus_musculus.GRCm38.84.gtf", 
+    A = find_geneact(peak.df = regions, annotation.file = "~/Dropbox (GaTech)/Research/Projects/pipeline_integration/reference_genome/Mus_musculus.GRCm38.84.gtf", 
                      seq.levels = c(1:19, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
 } else if(species == "Human"){
-    A = find_geneact(peak.matrix = counts.atac, annotation.file = "/Users/ziqizhang/Dropbox/Research/Paper_Summary/ATAC-seq/pipeline_integration/reference_genome/Homo_sapiens.GRCh37.82.gtf", 
+    A = find_geneact(peak.df = regions, annotation.file = "~/Dropbox (GaTech)/Research/Projects/pipeline_integration/reference_genome/Homo_sapiens.GRCh37.82.gtf", 
                      seq.levels = c(1:22, "X", "Y"), upstream = upstream, downstream = downstream, verbose = TRUE)
 } else{
     stop("species can only be Human or Mouse")
